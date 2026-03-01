@@ -1,0 +1,124 @@
+:root {
+  /* Color Palette - Dark Premium Theme */
+  --bg-primary: #0f111a;
+  --bg-secondary: #161925;
+  --bg-panel: #1e2133;
+  --text-main: #e2e8f0;
+  --text-muted: #94a3b8;
+  
+  /* Accents */
+  --accent-primary: #3b82f6;
+  --accent-hover: #60a5fa;
+  --accent-success: #10b981; /* For +1 Utility */
+  --accent-danger: #ef4444;  /* For -1 Utility */
+  --accent-neutral: #9ca3af; /* For 0 Utility */
+  
+  /* Player Colors */
+  --color-max: #38bdf8; /* Light Blue for MAX */
+  --color-min: #fbbf24; /* Yellow/Orange for MIN */
+  
+  /* Borders & Shadows */
+  --border-color: rgba(255, 255, 255, 0.1);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+  --shadow-glow: 0 0 15px rgba(59, 130, 246, 0.3);
+
+  /* Typography */
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Base Layout Structure */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.header {
+  padding: 1rem 2rem;
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header h1 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Sidebar / Configurator */
+.sidebar {
+  width: 320px;
+  background-color: var(--bg-secondary);
+  border-right: 1px solid var(--border-color);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  overflow-y: auto;
+}
+
+/* Sim Area */
+.sim-area {
+  flex: 1;
+  position: relative;
+  background-color: var(--bg-primary);
+  overflow: hidden; /* For pan/zoom */
+}
+
+/* Generic Button Styles */
+button {
+  cursor: pointer;
+  border: none;
+  background: var(--bg-panel);
+  color: var(--text-main);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: 1px solid var(--border-color);
+}
+
+button:hover:not(:disabled) {
+  background: var(--accent-primary);
+  border-color: var(--accent-hover);
+  color: white;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Utility Classes */
+.flex-row { display: flex; align-items: center; }
+.flex-col { display: flex; flex-direction: column; }
+.gap-1 { gap: 0.5rem; }
+.gap-2 { gap: 1rem; }
