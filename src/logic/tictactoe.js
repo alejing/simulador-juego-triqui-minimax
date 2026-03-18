@@ -1,5 +1,6 @@
 /**
- * Tic-Tac-Toe Game Logic Functions
+ * LÓGICA DE NEGOCIO DEL TRIQUI
+ * Aquí se definen las reglas del juego: ganar, empatar y generar jugadas aleatorias.
  */
 
 export const checkWinner = (board) => {
@@ -32,12 +33,56 @@ export const isTerminal = (board) => {
 };
 
 /**
- * Utility evaluation function.
- * By convention: MAX (X) win = +1, MIN (O) win = -1, Draw = 0.
+ * FUNCIÓN DE UTILIDAD (Evaluación)
+ * Por convención en IA:
+ * MAX (X) gana = +1
+ * MIN (O) gana = -1
+ * Empate = 0
  */
 export const getUtility = (board) => {
     const winner = checkWinner(board);
     if (winner === 'X') return 1;
     if (winner === 'O') return -1;
     return 0;
+};
+
+/**
+ * Generates a random valid board state with a specific number of pieces.
+ * Ensures the game is not already won.
+ */
+export const generateRandomValidBoard = (numPieces = 5) => {
+    let attempts = 0;
+    while (attempts < 50) {
+        attempts++;
+        const board = Array(9).fill(null);
+        let currentPiece = 'X';
+        let movesMade = 0;
+
+        while (movesMade < numPieces) {
+            const emptyIndices = getAvailableMoves(board);
+            if (emptyIndices.length === 0) break;
+
+            const randomIdx = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+            board[randomIdx] = currentPiece;
+
+            // If someone wins during generation, this is an invalid starting board (we want an ongoing game)
+            if (checkWinner(board)) {
+                break;
+            }
+
+            currentPiece = currentPiece === 'X' ? 'O' : 'X';
+            movesMade++;
+        }
+
+        if (movesMade === numPieces && !checkWinner(board)) {
+            return board; // Found a valid mid-game state
+        }
+    }
+
+    // Fallback if random fails 50 times (very rare hook)
+    return [
+        'X', null, 'O',
+        null, 'X', null,
+        'O', null, null
+    ];
 };

@@ -3,12 +3,13 @@ import { isTerminal, getUtility, getAvailableMoves } from './tictactoe';
 let nodeIdCounter = 0;
 
 /**
- * Generates the full Minimax search tree from a given initial state.
- * Records the chronological steps of DFS to replay as an animation.
+ * GENERADOR DEL ÁRBOL MINIMAX
+ * Esta función es el corazón de la IA. Realiza una búsqueda en profundidad (DFS)
+ * y registra cada paso para que podamos animarlo después en la interfaz.
  * 
- * @param {Array} initialBoard 1D array of length 9 with 'X', 'O', or null
- * @param {boolean} isMaxTurn true if it's MAX (X)'s turn, false for MIN (O)
- * @returns {Object} { root, steps, maxDepth, allNodesMap }
+ * @param {Array} initialBoard Tablero actual (arreglo de 9 posiciones)
+ * @param {boolean} isMaxTurn ¿Es el turno de MAX (X)?
+ * @returns {Object} El árbol generado y la lista de pasos cronológicos.
  */
 export const generateMinimaxTree = (initialBoard, isMaxTurn) => {
     nodeIdCounter = 0;
@@ -29,7 +30,7 @@ export const generateMinimaxTree = (initialBoard, isMaxTurn) => {
         parentId: null
     };
 
-    // DFS recursive tree traversal
+    // Función recursiva para recorrer el árbol (DFS)
     const traverse = (node) => {
         allNodesMap.set(node.id, node);
         if (node.depth > maxTreeDepth) maxTreeDepth = node.depth;
@@ -43,7 +44,9 @@ export const generateMinimaxTree = (initialBoard, isMaxTurn) => {
             message: `[Turno de ${node.isMaxPlayer ? 'MAX' : 'MIN'}]: Evaluando el estado actual del tablero...`
         });
 
+        // REGLA DE PARADA: ¿Es un estado terminal (ganador o empate)?
         if (isTerminal(node.board)) {
+            // Asignamos la "Utilidad" estática (puntos) del estado final
             node.utility = getUtility(node.board);
             // Step Event: Evaluate leaf
             steps.push({
@@ -55,6 +58,7 @@ export const generateMinimaxTree = (initialBoard, isMaxTurn) => {
             return node.utility;
         }
 
+        // Si no es terminal, generamos todos los estados posibles siguientes
         const availableMoves = getAvailableMoves(node.board);
         let bestUtility = node.isMaxPlayer ? -Infinity : Infinity;
         let bestChildId = null;
@@ -88,7 +92,9 @@ export const generateMinimaxTree = (initialBoard, isMaxTurn) => {
 
             const childUtility = traverse(childNode);
 
-            // Minimax evaluation rules
+            // REGLA MINIMAX: 
+            // - Si soy MAX (X), busco el hijo con la mayor utilidad.
+            // - Si soy MIN (O), busco el hijo con la menor utilidad.
             if (node.isMaxPlayer) {
                 if (childUtility > bestUtility) {
                     bestUtility = childUtility;

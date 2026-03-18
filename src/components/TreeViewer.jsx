@@ -27,13 +27,14 @@ const TreeViewer = ({ treeData, nodeStates, activeNodeId, propagatingNodeId }) =
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    // Compute positions using d3-hierarchy only when treeData changes
+    // Cálculo de la estructura del árbol usando D3-Hierarchy
     const computedTree = useMemo(() => {
         if (!treeData) return null;
 
+        // Convierte los datos crudos en una jerarquía que D3 entiende
         const rootHierarchy = hierarchy(treeData, d => d.children);
 
-        // Config tree layout
+        // Configura el diseño visual (espaciado entre nodos y niveles)
         const treeLayout = tree()
             .nodeSize([NODE_WIDTH + NODE_SEPARATION_X, NODE_HEIGHT + NODE_SEPARATION_Y]);
 
@@ -57,7 +58,7 @@ const TreeViewer = ({ treeData, nodeStates, activeNodeId, propagatingNodeId }) =
     const descendants = computedTree.descendants();
     const links = computedTree.links();
 
-    // Calculate shifting based on actual rendered canvas width vs tree mathematical center
+    // Calculamos el desplazamiento (X shift) para centrar matemáticamente el árbol en el lienzo
     const xShift = wrapperWidth > 0 ? (wrapperWidth / 2) : 400;
 
     return (
@@ -73,7 +74,7 @@ const TreeViewer = ({ treeData, nodeStates, activeNodeId, propagatingNodeId }) =
                 <TransformComponent wrapperStyle={{ width: '100%', height: '100%' }}>
                     {/* We wrap everything in a relative div. d3 returns x, y around (0,0) */}
                     <div style={{ position: 'relative', width: wrapperWidth, height: '100vh' }}>
-                        {/* Draw Edges (SVG) */}
+                        {/* Dibuja las conexiones (SVG) */}
                         <svg style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', overflow: 'visible', zIndex: 0 }}>
                             <g transform={`translate(${xShift}, 50)`}>
                                 {links.map((link, i) => {

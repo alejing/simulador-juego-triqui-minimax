@@ -5,18 +5,23 @@
   --bg-panel: #1e2133;
   --text-main: #e2e8f0;
   --text-muted: #94a3b8;
-  
+
   /* Accents */
   --accent-primary: #3b82f6;
   --accent-hover: #60a5fa;
-  --accent-success: #10b981; /* For +1 Utility */
-  --accent-danger: #ef4444;  /* For -1 Utility */
-  --accent-neutral: #9ca3af; /* For 0 Utility */
-  
+  --accent-success: #10b981;
+  /* For +1 Utility */
+  --accent-danger: #ef4444;
+  /* For -1 Utility */
+  --accent-neutral: #9ca3af;
+  /* For 0 Utility */
+
   /* Player Colors */
-  --color-max: #38bdf8; /* Light Blue for MAX */
-  --color-min: #fbbf24; /* Yellow/Orange for MIN */
-  
+  --color-max: #38bdf8;
+  /* Light Blue for MAX */
+  --color-min: #fbbf24;
+  /* Yellow/Orange for MIN */
+
   /* Borders & Shadows */
   --border-color: rgba(255, 255, 255, 0.1);
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -88,7 +93,8 @@ body {
   flex: 1;
   position: relative;
   background-color: var(--bg-primary);
-  overflow: hidden; /* For pan/zoom */
+  overflow: hidden;
+  /* For pan/zoom */
 }
 
 /* Generic Button Styles */
@@ -118,7 +124,44 @@ button:disabled {
 }
 
 /* Utility Classes */
-.flex-row { display: flex; align-items: center; }
-.flex-col { display: flex; flex-direction: column; }
-.gap-1 { gap: 0.5rem; }
-.gap-2 { gap: 1rem; }
+.flex-row {
+  display: flex;
+  align-items: center;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.gap-1 {
+  gap: 0.5rem;
+}
+
+.gap-2 {
+  gap: 1rem;
+}
+
+/* Animations */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    border-color: var(--accent-success);
+    color: var(--accent-success);
+  }
+
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 15px rgba(16, 185, 129, 0);
+    border-color: var(--text-main);
+    color: var(--text-main);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    border-color: var(--accent-success);
+    color: var(--accent-success);
+  }
+}
